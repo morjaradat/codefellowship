@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>signup</title>
+    <link rel="stylesheet" th:href="@{/style.css}">
+
+</head>
+<body>
+<header>
+    <div class="header">
+        <h1>codeFellowShip</h1>
+        <a th:href="@{/login}">login</a>
+    </div>
+
+</header>
+<main>
+    <h1 class="page">Sign up</h1>
+
+    <form th:action="@{/signup}"  method="POST" class="form">
+        <label>firstname</label>
+        <input type="text" name="firstname" id="firstname"/>
+
+        <label>lastname</label>
+        <input type="text" name="lastname" id="lastname"/>
+
+        <label>dateOfBirth</label>
+        <input type="date" name="dateOfBirth" id="dateOfBirth"/>
+
+        <label>bio</label>
+        <input type="text" name="bio" id="bio"/>
+
+        <label>username</label>
+        <input type="text" name="username" id="username"/>
+
+        <label>password</label>
+        <input type="password" name="password" id="password"/>
+        <input type="submit" value="Submit" class="submit"/>
+    </form>
+</main>
+
+
+</body>
+</html>
