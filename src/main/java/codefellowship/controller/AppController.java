@@ -1,7 +1,9 @@
 package codefellowship.controller;
 
 import codefellowship.Repository.ApplicationUserRepository;
+import codefellowship.Repository.PostRepository;
 import codefellowship.model.ApplicationUser;
+import codefellowship.model.Post;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -27,19 +29,18 @@ public class AppController {
 
     @Autowired
     ApplicationUserRepository applicationUserRepository;
+    @Autowired
+    PostRepository postRepository;
 
     @Autowired
     PasswordEncoder encoder;
 
     @GetMapping("/")
     public String homePage(Principal accountDetail, Model model){
-        System.out.println("home1");
         if(accountDetail != null) {
             model.addAttribute("user", applicationUserRepository.findUserByUsername(accountDetail.getName()));
-            System.out.println("home2");
             return "homePage";
         } else {
-            System.out.println("home3");
             return "login";
         }
 
@@ -56,12 +57,24 @@ public class AppController {
 
 
     @GetMapping("/user/{id}")
-    public String getUser(@PathVariable Long id, Model model){
-        ApplicationUser user = applicationUserRepository.getById(id);
-        model.addAttribute("user", user);
-        return "profile";
+    public String getUser(@PathVariable Long id, Principal accountDetail,Model model){
+        if(accountDetail != null) {
+            ApplicationUser user = applicationUserRepository.getById(id);
+            model.addAttribute("user", user);
+            return "profile";
+        }else {
+            return "login";
+        }
+
     }
 
+    @PostMapping("/post/{id}")
+    public RedirectView newPost(@PathVariable Long id ,@RequestParam String body ){
+        ApplicationUser applicationUserId=applicationUserRepository.getById(id);
+        Post post = new Post(body,applicationUserId);
+        postRepository.save(post);
+        return new RedirectView("/");
+    }
 
     @PostMapping("/signup")
     public RedirectView signup(
@@ -83,7 +96,7 @@ public class AppController {
     }
     @GetMapping("/access-denied")
     public String getAccessDenied() {
-        return "/403";
+        return "403";
     }
 
 }
