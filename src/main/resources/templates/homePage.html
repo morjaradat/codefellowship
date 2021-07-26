@@ -16,9 +16,22 @@
 </header>
 <main>
     <h1 class="page">Welcome to Home Page</h1>
+<div>
+    <form th:action="'/post/' + ${user.id}" method="POST">
+        <label>Post description</label>
+        <textarea name="body" id="body" placeholder="write your new post here"></textarea>
+        <input type="submit" value="submit"/>
+    </form>
+</div>
 
+    <section>
+        <h3 th:text="${user.getUsername()+' posts'}"></h3>
+
+        <div th:each="post :${user.posts}">
+            <h5 th:text="${post.createdAt}"></h5>
+            <p th:text="${post.body}"></p>
+        </div>
+    </section>
 </main>
-
-
 </body>
 </html>

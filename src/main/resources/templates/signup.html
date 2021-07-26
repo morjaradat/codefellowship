@@ -16,7 +16,7 @@
 </header>
 <main>
     <h1 class="page">Sign up</h1>
-
+<div class="formBox">
     <form th:action="@{/signup}"  method="POST" class="form">
         <label>firstname</label>
         <input type="text" name="firstname" id="firstname"/>
@@ -37,6 +37,8 @@
         <input type="password" name="password" id="password"/>
         <input type="submit" value="Submit" class="submit"/>
     </form>
+</div>
+
 </main>
 
 

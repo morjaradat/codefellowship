@@ -5,3 +5,6 @@
 - if you have userName in dataBase you can log in ;after login Successfully you will redirect to the home page of teh application 
 - you can see your personal data in profile page 
 
+- added new create new post root to our application 
+- you can see and create a new post in homepage 
+- you can see the post you have in profile page 
