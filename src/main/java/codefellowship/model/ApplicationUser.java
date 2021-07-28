@@ -6,7 +6,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 import javax.persistence.*;
 import java.util.Collection;
 import java.sql.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 public class ApplicationUser implements UserDetails {
@@ -28,6 +30,20 @@ public class ApplicationUser implements UserDetails {
     @OneToMany(mappedBy = "applicationUser")
     private List<Post> posts;
 
+
+    @ManyToMany(mappedBy = "following")
+    Set<ApplicationUser> follower = new HashSet<>();
+
+    @ManyToMany
+    @JoinTable(
+            name = "followers",
+            joinColumns = { @JoinColumn(name = "followerId")  },
+            inverseJoinColumns ={  @JoinColumn(name = "followingId")  }
+    )
+    Set<ApplicationUser> following = new HashSet<>();
+
+
+
     public ApplicationUser( String username,String password, String firstName,
                            String lastName, Date dateOfBirth, String bio)
     {
@@ -37,6 +53,15 @@ public class ApplicationUser implements UserDetails {
         this.lastName = lastName;
         this.dateOfBirth = dateOfBirth;
         this.bio = bio;
+    }
+
+
+    public Set<ApplicationUser> getFollower() {
+        return follower;
+    }
+
+    public Set<ApplicationUser> getFollowing() {
+        return following;
     }
 
     public ApplicationUser() {

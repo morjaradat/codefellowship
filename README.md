@@ -8,3 +8,9 @@
 - added new create new post root to our application 
 - you can see and create a new post in homepage 
 - you can see the post you have in profile page 
+
+
+- added fragments that take the head and navbar
+- you can  follow the other user 
+- you can see other users posts that you follow in feed page
+

@@ -1,19 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>homePage</title>
-    <link rel="stylesheet" th:href="@{/style.css}">
-</head>
+<head th:replace="fragments :: head"></head>
 <body>
-<header>
-    <div class="header">
-        <h1>codeFellowShip</h1>
-        <a th:href="'/user/' + ${user.id}">profile</a>
-        <a th:href="@{/logout}">logout</a>
-    </div>
-
-</header>
+<header th:replace="fragments :: header"></header>
 <main>
     <h1 class="page">Welcome to Home Page</h1>
 <div>
@@ -32,6 +21,23 @@
             <p th:text="${post.body}"></p>
         </div>
     </section>
+<hr/>
+<!--    <div th:if="${#lists.contains(followers,follower)}" th:each="follower : ${followers}">-->
+<!--        <h4 th:text="${follower.getUsername()}"></h4>-->
+<!--        <form th:action="@{/unfollow}" method="POST">-->
+<!--            <input th:value="${follower.getId()}" name="id" id="id" type="text" hidden/>-->
+<!--            <input type="submit" value="unFollow"/>-->
+<!--        </form>-->
+<!--    </div>-->
+<!--    th:if="${not #lists.contains(followers,follower)}"-->
+    <hr/>
+    <div  th:each="follower : ${followers}">
+        <h4 th:text="${follower.getUsername()}"></h4>
+        <form th:action="@{/follow}" method="POST">
+            <input th:value="${follower.getId()}" name="id" id="id" type="text" hidden/>
+            <input type="submit" value="Follow"/>
+        </form>
+    </div>
 </main>
 </body>
 </html>
