@@ -22,6 +22,7 @@ import org.springframework.web.servlet.view.RedirectView;
 import java.security.Principal;
 
 import java.sql.Date;
+import java.util.List;
 
 @Controller
 public class AppController {
@@ -38,14 +39,31 @@ public class AppController {
     @GetMapping("/")
     public String homePage(Principal accountDetail, Model model){
         if(accountDetail != null) {
-            model.addAttribute("user", applicationUserRepository.findUserByUsername(accountDetail.getName()));
-            return "homePage";
+            ApplicationUser user = applicationUserRepository.findUserByUsername(accountDetail.getName());
+            model.addAttribute("user", user);
+            List<ApplicationUser> followers = findAllExceptUserName(user);
+            model.addAttribute("followers",followers);
+        return "homePage";
         } else {
+            return "login";
+        }
+    }
+    public List<ApplicationUser> findAllExceptUserName(ApplicationUser userName){
+        List<ApplicationUser> user = applicationUserRepository.findAll();
+        user.remove(userName);
+        return user;
+    }
+
+    @GetMapping("/myProfile")
+    public String getProfile(Principal accountDetail, Model model){
+        if (accountDetail != null){
+            model.addAttribute("user", applicationUserRepository.findUserByUsername(accountDetail.getName()));
+            return "profile";
+        }else {
             return "login";
         }
 
     }
-
     @GetMapping("/signup")
     public String signUpPage(){
         return "signup";
@@ -94,6 +112,32 @@ public class AppController {
 
         return new RedirectView("/login");
     }
+
+    @PostMapping("/follow")
+    public RedirectView Follow(Principal principal,@RequestParam Long id){
+        ApplicationUser currentUser = applicationUserRepository.findUserByUsername(principal.getName());
+        ApplicationUser follower = applicationUserRepository.findUserById(id);
+        currentUser.getFollowing().add(follower);
+        applicationUserRepository.save(currentUser);
+
+        return new RedirectView("/");
+    }
+    @PostMapping("/unfollow")
+    public RedirectView unFollow(Principal principal,@RequestParam Long id){
+        ApplicationUser currentUser = applicationUserRepository.findUserByUsername(principal.getName());
+        ApplicationUser follower = applicationUserRepository.findUserById(id);
+        currentUser.getFollowing().remove(follower);
+        applicationUserRepository.save(currentUser);
+
+        return new RedirectView("/");
+    }
+
+    @GetMapping("/feed")
+    public String getFedd(Principal principal,Model model){
+        model.addAttribute("user",applicationUserRepository.findUserByUsername(principal.getName()));
+        return "feed";
+    }
+
     @GetMapping("/access-denied")
     public String getAccessDenied() {
         return "403";

@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:replace="fragments :: head"></head>
+<body>
+<header th:replace="fragments :: header"></header>
+<main>
+    <h1> Feed page </h1>
+    <div th:each="user :${user.getFollowing()}">
+        <a th:href="'/user/' + ${user.getId()}" th:text="${user.getUsername()}"></a>
+<!--    <h3 th:text="${user.getUsername()}"></h3>-->
+    <div th:each="post:${user.posts}">
+        <h5 th:text="${post.createdAt}"></h5>
+        <p th:text="${post.body}"></p>
+        <hr/>
+    </div>
+    </div>
+</main>
+
+</body>
+</html>
