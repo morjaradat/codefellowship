@@ -23,27 +23,49 @@
     <div th:if="${param.logout}">
         You have been logged out.
     </div>
-
-   <div class="formBox">
-    <form th:action="@{/login}"  method="POST" class="form">
-        <div class="login">
-            <label>username</label>
-            <input type="text" name="username" />
+<div>
+    <section class="splashpageInfo">
+        <p class="splashpageTitle">Code Fellowship</p>
+        <p class="splashpageSubTitle">Join Others on Their Adventures</p>
+        <div class="splashpageQuestion">
+            <p class="question">What is Code Fellowship?</p>
+            <p>Students, young developers, and anybody else wanting to engage with other lifelong learners can join Code
+                Fellowship.</p>
         </div>
-        <div class="login">
-            <label>password</label>
-            <input type="password" name="password"/>
+        <div class="splashpageQuestion">
+            <p class="question">What purpose does it serve to be here?</p>
+            <p>We all have the same desire to learn how to write clean, secure, and performant code in the dev-loop.</p>
         </div>
+        <div class="splashpageQuestion">
+            <p class="question">What do I get in this environment?</p>
+            <p>You will gain knowledge that will allow you to cut your learning time in half compared to if you studied
+                alone.</p>
+        </div>
+        <div class="splashpageQuestion">
+            <p class="question">What will you get in terms of value?</p>
+            <p>The true value of Code Fellowship is the long-term connections you'll make.</p>
+        </div>
+        <p  class="splashpageSlog">We're here to make it easier for developers to communicate with one another. Don't forget to register now to
+            begin your experience!</p>
+    </section>
 
-        <input type="submit" value="Submit" class="submit"/>
-    </form>
+    <div class="formBox">
+        <form th:action="@{/login}"  method="POST" class="form">
+            <div class="login">
+                <label>username</label>
+                <input type="text" name="username" />
+            </div>
+            <div class="login">
+                <label>password</label>
+                <input type="password" name="password"/>
+            </div>
 
-   </div>
+            <input type="submit" value="Submit" class="submit"/>
+        </form>
+
+    </div>
+</div>
 
 </main>
-
-
-
-
 </body>
 </html>
